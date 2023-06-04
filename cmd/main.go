@@ -2,10 +2,13 @@ package main
 
 import (
 	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 )
+
+var secret = []byte("secret")
 
 const userKey = "user"
 
@@ -31,4 +34,25 @@ func index(c *gin.Context) {
 	}
 
 	c.HTML(http.StatusOK, "login.html", nil)
+}
+
+func engine() *gin.Engine {
+	r := gin.Default()
+
+	store := cookie.NewStore(secret)
+	r.Use(sessions.Sessions("mysession", store))
+
+	r.Static("/static", "./static")
+
+	r.GET("/login", showLoginPage)
+	r.POST("/login", login)
+	r.GET("/logout", logout)
+
+	private := r.Group("/private")
+	private.Use(AuthRequired)
+	{
+		private.GET("/me", me)
+		private.GET("/status", status)
+	}
+	return r
 }
