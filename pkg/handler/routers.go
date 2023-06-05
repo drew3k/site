@@ -12,28 +12,26 @@ const userKey = "user"
 
 var secret = []byte("secret")
 
-func engine() *gin.Engine {
+func Engine() *gin.Engine {
 	r := gin.Default()
 
 	store := cookie.NewStore(secret)
 	r.Use(sessions.Sessions("mysession", store))
 
-	r.Static("/static", "./static")
-
-	r.GET("/login", showLoginPage)
-	r.POST("/login", login)
-	r.GET("/logout", logout)
+	r.GET("/login", ShowLoginPage)
+	r.POST("/login", Login)
+	r.GET("/logout", Logout)
 
 	private := r.Group("/private")
 	private.Use(AuthRequired)
 	{
-		private.GET("/me", me)
-		private.GET("/status", status)
+		private.GET("/me", Me)
+		private.GET("/status", Status)
 	}
 	return r
 }
 
-func showLoginPage(c *gin.Context) {
+func ShowLoginPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "login.html", nil)
 }
 
@@ -48,7 +46,7 @@ func AuthRequired(c *gin.Context) {
 	c.Next()
 }
 
-func logout(c *gin.Context) {
+func Logout(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Delete(userKey)
 	if err := session.Save(); err != nil {
@@ -58,17 +56,17 @@ func logout(c *gin.Context) {
 	c.Redirect(http.StatusFound, "/")
 }
 
-func me(c *gin.Context) {
+func Me(c *gin.Context) {
 	session := sessions.Default(c)
 	user := session.Get(userKey)
 	c.HTML(http.StatusOK, "user.html", gin.H{"user": user})
 }
 
-func status(c *gin.Context) {
+func Status(c *gin.Context) {
 	c.HTML(http.StatusOK, "status.html", nil)
 }
 
-func login(c *gin.Context) {
+func Login(c *gin.Context) {
 	session := sessions.Default(c)
 	username := c.PostForm("username")
 	password := c.PostForm("password")
@@ -90,4 +88,14 @@ func login(c *gin.Context) {
 	}
 
 	c.Redirect(http.StatusFound, "/private/me")
+}
+
+func Index(c *gin.Context) {
+	session := sessions.Default(c)
+	if session.Get(userKey) != nil {
+		c.Redirect(http.StatusFound, "/private/me")
+		return
+	}
+
+	c.HTML(http.StatusOK, "login.html", nil)
 }
