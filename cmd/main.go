@@ -11,7 +11,7 @@ func main() {
 
 	r.Use(gin.Logger())
 
-	r.LoadHTMLGlob("templates/*.html")
+	r.LoadHTMLGlob("site/templates/*.html")
 
 	r.GET("/", handler.Index)
 
