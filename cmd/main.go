@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/drew3k/site/pkg/handler"
 	"github.com/gin-gonic/gin"
 	"log"
-	"myproj/site/pkg/handler"
 )
 
 func main() {
