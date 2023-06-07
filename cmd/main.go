@@ -19,11 +19,9 @@ func main() {
 	r.Use(gin.Logger())
 	r.LoadHTMLGlob("site/templates/*.html")
 
-	// Передача соединения с базой данных в обработчики запросов
 	r.GET("/", handler.Index(db))
 
 	if err := r.Run(":8080"); err != nil {
 		log.Fatal("Unable to start:", err)
 	}
-}
 }
