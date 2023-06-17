@@ -19,7 +19,7 @@ func main() {
 	r.Use(gin.Logger())
 	r.LoadHTMLGlob("site/templates/*.html")
 
-	r.GET("/", handler.Index(db))
+	r.GET("/", handler.Index)
 
 	if err := r.Run(":8080"); err != nil {
 		log.Fatal("Unable to start:", err)
