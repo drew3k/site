@@ -5,10 +5,11 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 	"log"
+	"myproj/site/database"
 )
 
 func main() {
-	db, err := setupDB()
+	db, err := database.SetupDB()
 	if err != nil {
 		log.Fatal("Failed to setup database:", err)
 		return
