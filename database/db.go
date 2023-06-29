@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func setupDB() (*sql.DB, error) {
+func SetupDB() (*sql.DB, error) {
 	db, err := sql.Open("postgres", "postgres://user:0000@localhost/mydatabase?sslmode=disable")
 	if err != nil {
 		log.Fatal("Unable to connect to database:", err)
