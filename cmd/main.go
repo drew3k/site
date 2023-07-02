@@ -1,11 +1,11 @@
 package main
 
 import (
+	"github.com/drew3k/site/database"
 	"github.com/drew3k/site/pkg/handler"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 	"log"
-	"myproj/site/database"
 )
 
 func main() {
