@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>User Info</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: #666;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .logout-btn,
+    .status-btn {
+      display: block;
+      width: 120px;
+      margin: 0 auto;
+      padding: 10px;
+      background-color: #9cbe1e;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .logout-btn {
+      background-color: #ff6666;
+    }
+  </style>
+</head>
+
+<body>
+<h1>Информация</h1>
+<p>Пользователь: {{.user}}</p>
+<a href="/private/status" class="status-btn">Статус</a>
+<a href="/logout" class="logout-btn">Выйти</a>
+</body>
+
+</html>
